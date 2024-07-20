@@ -3114,6 +3114,8 @@ function Library:CreateWindow(...)
 	local Window = {
 		Tabs = {};
 	};
+	
+	
 
 	local Outer = Library:Create('Frame', {
 		AnchorPoint = Config.AnchorPoint,
@@ -3125,6 +3127,12 @@ function Library:CreateWindow(...)
 		ZIndex = 1;
 		Parent = ScreenGui;
 	});
+	
+	local Screen = workspace.CurrentCamera.GetPropertyChangedSignal("ViewportSize"):Connect(function(size)
+		if _G.AutoSize then
+			Outer.Size = UDim2.fromOffset(550, size.Y/1.80)
+		end
+	end)
 
 	Library:MakeDraggable(Outer, 25);
 
