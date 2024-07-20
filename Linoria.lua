@@ -27,7 +27,7 @@ getgenv().Toggles = Toggles;
 getgenv().Options = Options;
 
 local Library = {
-	CloneMouse = false;
+	CloneMouse = true;
 	NotifyOnError = false;
 	DoubleClickToToggle = false;
 
