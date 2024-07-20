@@ -3128,7 +3128,7 @@ function Library:CreateWindow(...)
 		Parent = ScreenGui;
 	});
 	
-	local Screen = workspace.CurrentCamera.GetPropertyChangedSignal("ViewportSize"):Connect(function(size)
+	workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(function(size)
 		if _G.AutoSize then
 			Outer.Size = UDim2.fromOffset(550, size.Y/1.80)
 		end
