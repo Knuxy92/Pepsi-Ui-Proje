@@ -2610,11 +2610,14 @@ do
 
 		function Dropdown:OpenDropdown()
 			ListOuter.Visible = true;
+			TweenService:Create(ListOuter, TweenInfo.new(0.25, Enum.EasingStyle.Quad), {BackgroundTransparency = 0}):Play();
 			Library.OpenedFrames[ListOuter] = true;
 			DropdownArrow.Rotation = 180;
 		end;
 
 		function Dropdown:CloseDropdown()
+			TweenService:Create(ListOuter, TweenInfo.new(0.25, Enum.EasingStyle.Quad), {BackgroundTransparency = 1}):Play();
+			task.wait(0.25)
 			ListOuter.Visible = false;
 			Library.OpenedFrames[ListOuter] = nil;
 			DropdownArrow.Rotation = 0;
@@ -3114,8 +3117,8 @@ function Library:CreateWindow(...)
 	local Window = {
 		Tabs = {};
 	};
-	
-	
+
+
 
 	local Outer = Library:Create('Frame', {
 		AnchorPoint = Config.AnchorPoint,
@@ -3127,10 +3130,14 @@ function Library:CreateWindow(...)
 		ZIndex = 1;
 		Parent = ScreenGui;
 	});
-	
+
 	workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(function(size)
-		if _G.AutoSize then
-			Outer.Size = UDim2.fromOffset(550, size.Y/1.80)
+		if _G['Normal Hub Table'] and _G['Normal Hub Table']["AutoSize"] then
+			if _G['Normal Hub Table']["TweenUiSize"] then
+				TweenService:Create(Outer, TweenInfo.new(_G['Normal Hub Table']["SpeedTweenUi"] or 0.25, _G['Normal Hub Table']["StyleTweenUi"] or Enum.EasingStyle.Quad), {Size = UDim2.fromOffset(550, workspace.CurrentCamera.ViewportSize.Y/_G['Normal Hub Table']["Mutiply"] or 1.80)}):Play();
+			else
+				Outer.Size = UDim2.fromOffset(550, workspace.CurrentCamera.ViewportSize.Y/_G['Normal Hub Table']["Mutiply"] or 1.80)
+			end
 		end
 	end)
 
@@ -3308,7 +3315,8 @@ function Library:CreateWindow(...)
 			Parent = LeftSide;
 		});
 
-		Library:Create('UIListLayout', {
+
+Library:Create('UIListLayout', {
 			Padding = UDim.new(0, 8);
 			FillDirection = Enum.FillDirection.Vertical;
 			SortOrder = Enum.SortOrder.LayoutOrder;
