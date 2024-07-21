@@ -3133,10 +3133,22 @@ function Library:CreateWindow(...)
 
 	workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(function(size)
 		if _G['Normal Hub Table'] and _G['Normal Hub Table']["AutoSize"] then
-			if _G['Normal Hub Table']["TweenUiSize"] then
-				TweenService:Create(Outer, TweenInfo.new(_G['Normal Hub Table']["SpeedTweenUi"] or 0.25, _G['Normal Hub Table']["StyleTweenUi"] or Enum.EasingStyle.Quad), {Size = UDim2.fromOffset(550, workspace.CurrentCamera.ViewportSize.Y/_G['Normal Hub Table']["Mutiply"] or 1.80)}):Play();
+			local SizeMutify = workspace.CurrentCamera.ViewportSize.Y/_G['Normal Hub Table']["Mutiply"] or 1.80
+			
+			if SizeMutify < 300 then
+				SizeMutify = 300
+				_G['Normal Hub Table']["SizeX"] = 600
 			else
-				Outer.Size = UDim2.fromOffset(550, workspace.CurrentCamera.ViewportSize.Y/_G['Normal Hub Table']["Mutiply"] or 1.80)
+				_G['Normal Hub Table']["SizeX"] = 550
+			end
+			
+			if _G['Normal Hub Table']["TweenUiSize"] then
+				TweenService:Create(Outer, TweenInfo.new(_G['Normal Hub Table']["SpeedTweenUi"] or 0.25, 
+					_G['Normal Hub Table']["StyleTweenUi"] or Enum.EasingStyle.Quad), {
+						Size = UDim2.fromOffset(_G['Normal Hub Table']["SizeX"] , SizeMutify)
+					}):Play();
+			else
+				Outer.Size = UDim2.fromOffset(_G['Normal Hub Table']["SizeX"], SizeMutify)
 			end
 		end
 	end)
@@ -3316,7 +3328,7 @@ function Library:CreateWindow(...)
 		});
 
 
-Library:Create('UIListLayout', {
+		Library:Create('UIListLayout', {
 			Padding = UDim.new(0, 8);
 			FillDirection = Enum.FillDirection.Vertical;
 			SortOrder = Enum.SortOrder.LayoutOrder;
