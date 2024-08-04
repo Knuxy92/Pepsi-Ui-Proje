@@ -3134,14 +3134,14 @@ function Library:CreateWindow(...)
 	workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(function(size)
 		if _G['Normal Hub Table'] and _G['Normal Hub Table']["AutoSize"] then
 			local SizeMutify = workspace.CurrentCamera.ViewportSize.Y/_G['Normal Hub Table']["Mutiply"] or 1.80
-			
+
 			if SizeMutify < 300 then
 				SizeMutify = 300
 				_G['Normal Hub Table']["SizeX"] = 600
 			else
 				_G['Normal Hub Table']["SizeX"] = 550
 			end
-			
+
 			if _G['Normal Hub Table']["TweenUiSize"] then
 				TweenService:Create(Outer, TweenInfo.new(_G['Normal Hub Table']["SpeedTweenUi"] or 0.25, 
 					_G['Normal Hub Table']["StyleTweenUi"] or Enum.EasingStyle.Quad), {
@@ -3178,6 +3178,12 @@ function Library:CreateWindow(...)
 		ZIndex = 1;
 		Parent = Inner;
 	});
+	
+	spawn(function()
+		while wait() do
+			WindowLabel.Text = Config.Title.." | "..tostring(math.floor(workspace:GetRealPhysicsFPS())).." FPS "
+		end
+	end)
 
 	local MainSectionOuter = Library:Create('Frame', {
 		BackgroundColor3 = Library.BackgroundColor;
