@@ -3178,12 +3178,6 @@ function Library:CreateWindow(...)
 		ZIndex = 1;
 		Parent = Inner;
 	});
-	
-	spawn(function()
-		while wait() do
-			WindowLabel:SetText(Config.Title.." | "..tostring(math.floor(workspace:GetRealPhysicsFPS())).." FPS ")
-		end
-	end)
 
 	local MainSectionOuter = Library:Create('Frame', {
 		BackgroundColor3 = Library.BackgroundColor;
