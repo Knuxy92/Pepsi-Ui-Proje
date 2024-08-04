@@ -3181,7 +3181,7 @@ function Library:CreateWindow(...)
 	
 	spawn(function()
 		while wait() do
-			WindowLabel.Text = Config.Title.." | "..tostring(math.floor(workspace:GetRealPhysicsFPS())).." FPS "
+			WindowLabel:SetText(Config.Title.." | "..tostring(math.floor(workspace:GetRealPhysicsFPS())).." FPS ")
 		end
 	end)
 
