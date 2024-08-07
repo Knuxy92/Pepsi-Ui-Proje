@@ -251,7 +251,7 @@ function Library:AddToolTip(InfoStr, HoverInstance)
 	end)
 
 	HoverInstance.InputEnded:Connect(function(input)
-		if (input.UserInputType ~= Enum.UserInputType.MouseButton1 or input.UserInputType ~= Enum.UserInputType.Touch) then
+		if (input.UserInputType ~= Enum.UserInputType.MouseButton1 and input.UserInputType ~= Enum.UserInputType.Touch) then
 			IsHovering = false
 			Tooltip.Visible = false
 		end
@@ -805,7 +805,7 @@ do
 				);
 
 				Button.InputBegan:Connect(function(Input)
-					if Input.UserInputType ~= Enum.UserInputType.MouseButton1 or Input.UserInputType ~= Enum.UserInputType.Touch then
+					if Input.UserInputType ~= Enum.UserInputType.MouseButton1 and Input.UserInputType ~= Enum.UserInputType.Touch then
 						return
 					end
 
@@ -2228,7 +2228,7 @@ do
 				local gPos = Fill.Size.X.Offset;
 				local Diff = mPos - (Fill.AbsolutePosition.X + gPos);
 
-				while InputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) do
+				while InputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) or InputService.TouchEnabled do
 					local nMPos = Mouse.X;
 					local nX = math.clamp(gPos + (nMPos - mPos) + Diff, 0, Slider.MaxSize);
 
